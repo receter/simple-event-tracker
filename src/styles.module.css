@@ -1,0 +1,74 @@
+.app {
+
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid black
+}
+
+.newTracker {
+
+}
+
+.trackers {
+
+}
+
+.tracker {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid black
+}
+
+.trackerCount {
+
+}
+
+.trackerName {
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.trackerTrack {
+    margin-left: auto;
+}
+
+.trackEvent,
+.createTracker {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.createTracker {
+
+}
+
+.trackEvent {
+    flex-direction: column;
+}
+
+.trackEventTitle {
+
+}
+
+.trackEventSave {
+
+}
+
+.trackEventDiscard {
+
+}
