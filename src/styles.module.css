@@ -1,17 +1,38 @@
 .app {
-
+    color: #fff;
+    background: var(--color-background);
+    font-size: 1.25rem;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1em;
+    align-items: baseline;
     box-sizing: border-box;
-    border-bottom: 1px solid black
+    border-bottom: 1px solid var(--color-border);
 }
 
 .newTracker {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: white;
+    font-size: .875em;
+    font-family: inherit;
+    cursor: pointer;
+}
 
+.newTracker:before {
+    content: '';
+    display: inline-block;
+    height: .75em;
+    width: .75em;
+    background: url(./plus-white.svg) no-repeat center center;
+    background-size: 100% 100%;
+    margin-right: .5em;
+    position: relative;
+    bottom: -.05em;
 }
 
 .trackers {
@@ -20,24 +41,58 @@
 
 .tracker {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
-    padding: 1rem;
     box-sizing: border-box;
-    border-bottom: 1px solid black
+    border-bottom: 1px solid var(--color-border);
+    min-height: 4em;
+    user-select: none;
+}
+
+.trackerDetails {
+    width: 100%;
+    display: flex;
+    padding-left: 1em;
+}
+
+.trackerCount,
+.trackerName {
+    display: flex;
+    align-items: center;
+}
+
+.trackerCount > div,
+.trackerName > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .trackerCount {
+    min-width: 2em;
+}
 
+.trackerCount > div {
+    width: 100%;
+    font-weight: bold;
 }
 
 .trackerName {
-    font-weight: bold;
-    margin-left: 1rem;
+    margin-left: 1em;
+}
+
+.trackerInfo {
+    color: var(--color-border);
 }
 
 .trackerTrack {
-    margin-left: auto;
+    background: url(./plus.svg) no-repeat center center;
+    border: 0;
+    width: 4em;
+    cursor: pointer;
+    font-size: 1em;
+    flex-shrink: 0;
+    border-left: 1px solid var(--color-border);
 }
 
 .trackEvent,
@@ -47,7 +102,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: white;
+    background: var(--color-background);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,16 +114,130 @@
 
 .trackEvent {
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 .trackEventTitle {
+    padding: 5rem 1rem;
+}
 
+.trackEventDiscard,
+.trackEventSave {
+    font-size: 1em;
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 1em;
+    background: transparent;
+    color: inherit;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    cursor: pointer;
 }
 
 .trackEventSave {
-
+    margin-top: 1em;
 }
 
 .trackEventDiscard {
+    border-bottom: 1px solid var(--color-border);
+}
 
+.trackEventTime {
+    padding-top: 1em;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: .5rem;
+}
+
+.timeManipulationButtons {
+    display: flex;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.timeManipulationButtons button {
+    width: 100%;
+    white-space: nowrap;
+    display: block;
+    font-size: .75em;
+    margin: 0;
+    padding: 1em;
+    background: transparent;
+    color: inherit;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
+    cursor: pointer;
+}
+
+.timeManipulationButtons button:first-child {
+    border-left: 0;
+}
+
+
+.detailView {
+    text-align: center;
+}
+
+.detailViewClose {
+    position: absolute;
+    top: .5em;
+    right: .5em;
+}
+
+.detailViewCount {
+    font-size: 3em;
+    border: 2px solid var(--color-border);
+    height: 2em;
+    text-align: center;
+    line-height: 2em;
+    font-weight: bold;
+    border-radius: 2em;
+    width: 2em;
+    margin: .751em auto 0 auto;
+}
+
+.detailViewTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detailViewLast {
+}
+
+.detailViewCalendar {
+    margin: 1em auto 0 auto;
+    width: fit-content
+}
+
+.detailViewDay {
+    display: flex;
+}
+
+.detailViewDay > div:first-child {
+    width: 2em;
+}
+
+.detailViewSunday {
+}
+
+.detailViewDay + .detailViewSunday {
+    margin-top: 1em;
+}
+
+.detailViewDelete {
+    margin-top: 1.5em;
+}
+
+/* No hover on touch */
+@media (hover: hover) and (pointer: fine) {
+    .trackerTrack:hover {
+        background-color: var(--color-hover);
+    }
+    .trackerDetails:hover {
+        background-color: var(--color-hover);
+        cursor: pointer;
+    }
 }
