@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useMemo, useReducer, useState } from 'react';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -7,8 +7,16 @@ import * as styles from './styles.module.css';
 dayjs.extend(relativeTime);
 
 function sortTrackersByLatestEvent(a, b) {
-  const latestDateA = dayjs(a.events[a.events.length - 1]);
-  const latestDateB = dayjs(b.events[b.events.length - 1]);
+  const latestEventA = a.events[a.events.length - 1];
+  const latestEventB = b.events[b.events.length - 1];
+  if (!latestEventA) {
+    return 1;
+  }
+  if (!latestEventB) {
+    return -1
+  }
+  const latestDateA = dayjs(latestEventA);
+  const latestDateB = dayjs(latestEventB);
   if (latestDateA.isAfter(latestDateB)) {
     return -1;
   } else {
@@ -120,7 +128,9 @@ function App() {
     }
   }
 
-  const sortedTrackers = state.trackers.sort(sortTrackersByLatestEvent);
+  const sortedTrackers = useMemo(() => {
+    return state.trackers.sort(sortTrackersByLatestEvent);
+  }, [state.trackers])
 
   if (trackerDetailView) {
     const tracker = trackerDetailView;
@@ -128,11 +138,19 @@ function App() {
     const lastEvent = tracker.events[tracker.events.length - 1];
     const dateNow = dayjs();
     const dateCreated = dayjs(firstEvent);
-    const daysSinceCreated = Math.max(14, Math.ceil(dateNow.diff(dateCreated, 'days', true)));
+    const daysSinceCreated = Math.floor(dateNow.diff(dateCreated, 'days', true));
+    const minDaysToDisplay = 14;
+    const daysBeforeCreated = minDaysToDisplay - daysSinceCreated - 1;
     const calendarDays = [];
-    for (let i = 0; i < daysSinceCreated; i++) {
+
+    for (let i = daysSinceCreated; i >= 0; i--) {
+      calendarDays.push(dateCreated.add(i, 'day'));
+    }
+
+    for (let i = 1; i <= daysBeforeCreated; i++) {
       calendarDays.push(dateCreated.subtract(i, 'day'));
     }
+
     return <div className={styles.app}>
       <div className={styles.detailView}>
         <button className={styles.detailViewClose} onClick={handleClickCloseDetailView} type={'button'}>Close</button>
@@ -179,7 +197,11 @@ function App() {
             <div className={styles.trackerName}>
               <div>
                 <div>{tracker.name}</div>
-                <div className={styles.trackerInfo}>{dayjs(tracker.events[tracker.events.length - 1]).fromNow()}</div>
+                <div className={styles.trackerInfo}>{tracker.events.length > 0 ?
+                  dayjs(tracker.events[tracker.events.length - 1]).fromNow()
+                  :
+                  'No events yet'
+                }</div>
               </div>
             </div>
           </div>
